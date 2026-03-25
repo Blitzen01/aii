@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Good Night, My Universe ❤️</title>
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        <style>
+            /* --- COSMIC COLORS --- */
+            :root {
+                --space-black: #020617;
+                --nebula-purple: #4c1d95;
+                --nebula-blue: #1e3a8a;
+                --star-white: #ffffff;
+                --text-highlight: #c084fc;
+            }
+
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+
+            body, html {
+                height: 100%;
+                width: 100%;
+                font-family: 'Poppins', sans-serif;
+                background-color: var(--space-black);
+                color: #f8fafc;
+                overflow-x: hidden;
+            }
+
+            /* --- FULL GALAXY BACKGROUND --- */
+            .universe-wrapper {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+                overflow: hidden;
+                cursor: crosshair; /* Hint that interaction is possible */
+            }
+
+            /* Nebula Clouds */
+            .nebula {
+                position: absolute;
+                width: 800px;
+                height: 800px;
+                border-radius: 50%;
+                filter: blur(120px);
+                opacity: 0.15;
+                animation: nebula-drift 30s infinite alternate ease-in-out;
+            }
+            .nebula-1 { background: var(--nebula-purple); top: -10%; left: -10%; }
+            .nebula-2 { background: var(--nebula-blue); bottom: -10%; right: -10%; animation-delay: -5s; }
+
+            @keyframes nebula-drift {
+                from { transform: translate(0, 0) scale(1); }
+                to { transform: translate(100px, 50px) scale(1.2); }
+            }
+
+            /* Twinkling Stars */
+            .star {
+                position: absolute;
+                background: white;
+                border-radius: 50%;
+                opacity: 0;
+                animation: twinkle var(--d) infinite ease-in-out;
+            }
+
+            @keyframes twinkle {
+                0%, 100% { opacity: 0.2; transform: scale(1); }
+                50% { opacity: 0.8; transform: scale(1.3); box-shadow: 0 0 10px white; }
+            }
+
+            /* Shooting Star */
+            .shooting-star {
+                position: absolute;
+                height: 2px;
+                background: linear-gradient(90deg, white, transparent);
+                animation: shoot 4s linear infinite;
+                opacity: 0;
+                z-index: 0;
+            }
+
+            @keyframes shoot {
+                0% { transform: translateX(0) translateY(0) rotate(-45deg) scaleX(0); opacity: 0; }
+                10% { opacity: 1; transform: translateX(-100px) translateY(100px) rotate(-45deg) scaleX(1); }
+                20% { opacity: 0; transform: translateX(-500px) translateY(500px) rotate(-45deg) scaleX(1); }
+                100% { opacity: 0; }
+            }
+
+            /* --- Heart Burst Animation --- */
+            .heart-burst {
+                position: absolute;
+                pointer-events: none; /* Let clicks pass through */
+                z-index: 100; /* On top of galaxy, behind text */
+                opacity: 0;
+                animation: burst 1s ease-out forwards;
+                font-size: 20px;
+                color: #f43f5e;
+            }
+
+            @keyframes burst {
+                0% { transform: scale(0) rotate(0deg); opacity: 1; }
+                50% { transform: scale(1.5) rotate(calc(var(--r) * 1deg)); opacity: 1; }
+                100% { transform: scale(0) rotate(calc(var(--r) * 1deg)); opacity: 0; }
+            }
+
+            /* --- CONTENT LAYOUT --- */
+            .main-container {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 40px 20px;
+                text-align: center;
+                z-index: 10;
+            }
+
+            .profile-card {
+                position: relative;
+                margin-bottom: 50px;
+                opacity: 0;
+                animation: fadeInDown 1.5s forwards 0.5s;
+                pointer-events: auto; /* Allow heart bursts on photo */
+            }
+
+            .profile-pic {
+                width: 190px;
+                height: 190px;
+                object-fit: cover;
+                border-radius: 50%;
+                border: 4px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 50px rgba(129, 140, 248, 0.4);
+                position: relative;
+                z-index: 2;
+            }
+
+            /* Spinning Orbit Ring */
+            .orbit {
+                position: absolute;
+                top: -15px; left: -15px; right: -15px; bottom: -15px;
+                border: 1px dashed rgba(192, 132, 252, 0.5);
+                border-radius: 50%;
+                animation: spin 20s linear infinite;
+                z-index: 1;
+            }
+
+            @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+            .greeting-box {
+                max-width: 550px;
+                background: rgba(15, 23, 42, 0.7);
+                backdrop-filter: blur(20px);
+                padding: 40px;
+                border-radius: 40px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                animation: fadeInUp 1.5s forwards 1s, float 6s infinite ease-in-out;
+                pointer-events: auto; /* Let bursts work on box */
+            }
+
+            h1 {
+                font-family: 'Dancing Script', cursive;
+                font-size: 3.5rem;
+                margin-bottom: 20px;
+                color: #fff;
+                text-shadow: 0 0 15px var(--text-highlight);
+            }
+
+            p {
+                font-size: 1.1rem;
+                line-height: 1.8;
+                color: #cbd5e1;
+                margin-bottom: 20px;
+            }
+
+            .cursive-end {
+                font-family: 'Dancing Script', cursive;
+                font-size: 2.8rem;
+                color: var(--text-highlight);
+            }
+
+            .heart { color: #f43f5e; display: inline-block; animation: heart-beat 1.5s infinite; }
+
+            @keyframes heart-beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+            @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+            @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+            @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+            @media (max-width: 768px) {
+                h1 { font-size: 2.8rem; }
+                .greeting-box { padding: 30px; }
+            }
+        </style>
+    </head>
+    <body class="universe-wrapper" id="galaxy">
+
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+
+        <main class="main-container">
+            <div class="profile-card">
+                <div class="orbit"></div>
+                <img src="images/01/1.png" alt="Bonding" class="profile-pic" onerror="this.src='https://via.placeholder.com/200/020617/c084fc?text=Universe'">
+            </div>
+
+            <div class="greeting-box">
+                <h1>Good Night</h1>
+                <p>
+                    Thank you so much sa time mo makipag bonding ngayong araw. Every moment shared with you is like finding a new star in the sky. It really means a lot to me.
+                </p>
+                <p>
+                    Pahinga ka na well. Panaginipan mo sana ako.
+                </p>
+                <p class="cursive-end">
+                    I Love You <span class="heart">❤️</span>
+                </p>
+            </div>
+        </main>
+
+        <script>
+            function createGalaxy() {
+                const galaxy = document.getElementById('galaxy');
+                const starCount = 150;
+
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const size = Math.random() * 2.5 + 'px';
+                    
+                    star.style.width = size;
+                    star.style.height = size;
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.setProperty('--d', (Math.random() * 4 + 2) + 's');
+                    star.style.animationDelay = Math.random() * 5 + 's';
+                    
+                    galaxy.appendChild(star);
+                }
+
+                // Periodic Shooting Star
+                setInterval(() => {
+                    const shooter = document.createElement('div');
+                    shooter.className = 'shooting-star';
+                    shooter.style.width = (Math.random() * 100 + 100) + 'px';
+                    shooter.style.top = Math.random() * 40 + '%';
+                    shooter.style.left = (Math.random() * 40 + 60) + '%';
+                    galaxy.appendChild(shooter);
+                    
+                    setTimeout(() => shooter.remove(), 4000);
+                }, 5000);
+
+                // --- Tap/Click to Burst Hearts ---
+                galaxy.addEventListener('click', (e) => {
+                    // Ignore clicks inside the greeting box or profile card
+                    if (e.target.closest('.greeting-box') || e.target.closest('.profile-card')) {
+                        return;
+                    }
+
+                    const burstCount = 5;
+                    for (let i = 0; i < burstCount; i++) {
+                        const heart = document.createElement('div');
+                        heart.className = 'heart-burst';
+                        heart.innerHTML = '❤️';
+                        
+                        // Center burst on the click coordinate
+                        heart.style.top = (e.clientY - 10) + 'px';
+                        heart.style.left = (e.clientX - 10) + 'px';
+                        
+                        // Random rotation and scatter distance using CSS variables
+                        heart.style.setProperty('--r', Math.random() * 360);
+                        
+                        // Add to galaxy, behind main content z-index
+                        galaxy.appendChild(heart);
+                        
+                        // Remove after animation finishes
+                        setTimeout(() => heart.remove(), 1000);
+                    }
+                });
+            }
+
+            window.onload = createGalaxy;
+        </script>
+    </body>
+</html>
